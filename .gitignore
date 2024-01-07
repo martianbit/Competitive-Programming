@@ -1,0 +1,9 @@
+main
+Makefile
+*.txt
+*.pdf
+*.zip
+*.sh
+*.py
+bup*.cpp
+
