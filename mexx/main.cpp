@@ -6,7 +6,7 @@ typedef long long ll;
 int main() {
     FastIO;
     bool ok, same;
-    ll i, j, rs, cntr, N;
+    ll i, j, rs, N;
     cin >> N;
     vector<ll> lucky(N);
     for(i = 0; i < N; i++)
@@ -40,13 +40,8 @@ int main() {
             ok = false;
     }
     else if(ok) {
-        cntr = lucky.back();
-        while(!free_places.empty()) {
-            ans[free_places.top()] = ++cntr;
-            free_places.pop();
-        }
-        for(i = rs + 1; i < N; i++)
-            ans[i] = ++cntr;
+        for(i = 0; i < N && !lucky[i] && !ans[i]; i++)
+            ans[i] = lucky.back() + 1;
     }
     if(ok) {
         cout << "IGEN\n";
