@@ -13,7 +13,6 @@ void dfs(ll vertex, vector<bool> &vis, stack<ll> &st, const vector<vector<ll>> &
 }
 int main() {
     FastIO;
-    bool ok;
     ll i, v, N, M, A, B;
     cin >> N >> M;
     vector<vector<ll>> AL(N + 1);
