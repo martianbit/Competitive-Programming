@@ -1,42 +1,32 @@
 #include <bits/stdc++.h>
-#include <bits/extc++.h>
 #define FastIO ios::sync_with_stdio(false); cin.tie(NULL); cout.tie(NULL)
 using namespace std;
-using namespace __gnu_pbds;
 typedef long long ll;
-typedef tree<ll, null_type, less<ll>, rb_tree_tag, tree_order_statistics_node_update> ost;
-ost dfs(ll vertex, vector<bool> &states, const vector<vector<ll>> &tree) {
-    bool si;
-    ost signals;
-    for(const auto &x : tree[vertex]) {
-        auto ns = dfs(x, states, tree);
-        for(const auto &y : ns)
-            signals.insert(y);
-    }
-    si = (states[vertex] + signals.order_of_key(vertex)) % 2;
-    states[vertex] = (states[vertex] + signals.size()) % 2;
-    if(si)
-        signals.insert(vertex);
-    return signals;
+bool is_binomial_odd(ll n, ll k) {
+    if(!k)
+        return true;
+    if((1 - n & 1) && (k & 1))
+        return false;
+    return is_binomial_odd(n / 2, k / 2);
 }
 int main() {
     FastIO;
-    ll i, u, s, N, K, Q;
+    ll i, ans, N, K, Q, P, S;
     cin >> N >> K >> Q;
-    vector<vector<ll>> tree(N);
-    for(i = 1; i < N; i++) {
-        cin >> u;
-        tree[u - 1].push_back(i);
+    vector<ll> D(N + 1);
+    D[1] = 0;
+    for(i = 2; i <= N; i++) {
+        cin >> P;
+        D[i] = D[P] + 1;
     }
-    vector<bool> states(N);
     while(Q--) {
-        for(i = 0; i < N; i++) {
-            cin >> s;
-            states[i] = s;
+        cin >> ans;
+        for(i = 2; i <= N; i++) {
+            cin >> S;
+            if(S && is_binomial_odd(D[i] + K - 1, D[i]))
+                ans ^= 1;
         }
-        for(i = 0; i < K; i++)
-            dfs(0, states, tree);
-        cout << states[0] << '\n';
+        cout << ans << '\n';
     }
     return 0;
 }
